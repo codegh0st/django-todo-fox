@@ -4,8 +4,8 @@ FROM python:3.9
 # changin working directory all operation will be done this dir
 WORKDIR /app
 
-#installing django version 4.2.3
-RUN pin install django==4.2.3
+#installing django version 4.2.1
+#RUN pin install django==4.2.1, even no need to give this statement because using requrement.txt already django version is installing
 
 #copying everying thing from host's current directory to image's current dir wihc is  "/app" folder
 COPY . . 
