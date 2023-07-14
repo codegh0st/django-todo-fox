@@ -13,5 +13,8 @@ COPY . .
 # generate requirement.txt using "pip freeze > requirements.txt"
 RUN pip install -r requirements.txt
 
+#exposing the app on port 8000, Means on this container port port 8000 will be open, by which our app will be accesed
+EXPOSE 8080
+
 # startind django's inbuild server on "any-ip:8000" which will make this app accesible from open internet
-CMD ["python3", "manage.py", "runserver 0.0.0.0:8080"]
+CMD ["python3", "manage.py", "runserver 0.0.0.0:8000"]
