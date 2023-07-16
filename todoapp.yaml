@@ -26,9 +26,32 @@ kind: Service
 metadata:
   name: todoappsvc
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: todoapp
   ports:
-  - port: 8000
+  - port: 80
     targetPort: 8000
+---
+# ingress host based
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todoapp-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "todoapp.rahulrajsingh.in"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: todoappsvc #service name where triffic to be redirected, traffic will be comming from loadbalancer. 
+            port:
+              number: 80 # servie port on which app's service which is handling that appliation. 
+
