@@ -26,6 +26,7 @@ kind: Service
 metadata:
   name: todoappsvc
 spec:
+  type: NodePort
   selector:
     app: todoapp
   ports:
