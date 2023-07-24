@@ -1,0 +1,28 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpadeploymentautoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: todoapp #this is name of deployement
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 40 #if pod cpu utilization reach upto 40% new pod will created
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 40 #if pod memory utilization reach upto 40% new pod will created
+
+# you need to install metric server, it comes as deployemnts, 
+# metric server pod shuld be up and running then only it will send the cpu and memory utilization report to cluster.
+# hence hpa will able to read that report and roll out or roll in new pods. 
